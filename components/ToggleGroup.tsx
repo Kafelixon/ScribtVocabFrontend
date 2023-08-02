@@ -21,7 +21,7 @@ export default function ToggleGroup({ label, options, onChange }: ToggleGroupPro
 
     return (
         <>
-            <FormLabel>{label}</FormLabel>
+            <FormLabel sx={{ mb: 0, mt: 1 }}>{label}</FormLabel>
             <ToggleButtonGroup
                 value={selectedOption}
                 onChange={(_event, newValue) => {

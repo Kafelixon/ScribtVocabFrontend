@@ -7,6 +7,7 @@ import DropZone from '../components/DropZone';
 import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
 
+
 interface APIResponse {
     data: any;
 }
@@ -53,116 +54,116 @@ export const TranslationView: React.FC = () => {
         }
     };
 
-    return (<Box sx={{ flexGrow: 1 }}>
-        <Grid
-            display="flex"
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
-        >
-            <Stack
-                direction={{ xs: 'column', sm: 'row' }}
-                spacing={{ xs: 1, sm: 2, md: 4 }}
+    return (
+        <Box sx={{ flexGrow: 1 }}>
+            <Grid
+                display="flex"
+                flexDirection="column"
                 justifyContent="center"
                 alignItems="center"
             >
-                <Card variant="outlined" sx={{ boxShadow: 2 }}>
-                    <Typography
-                        level="h1"
-                        fontWeight="xl"
-                        textAlign="center"
-                        sx={{ mb: 6, mt: 3 }}
-                    >
-                        Script Vocab
-                    </Typography>
-                    <FormControl sx={{ flex: 1, gap: 1 }}>
-                        <ToggleGroup
-                            label="Input Type"
-                            options={[
-                                { label: 'Text', value: 'text' },
-                                { label: 'File', value: 'file' },
-                            ]}
-                            onChange={(value) => {
-                                setTextOrFile(value)
-                            }}
-                        />
-                        {textOrFile === 'text' ? (
-                            <Textarea
-                                placeholder="Enter text here"
-                                sx={{ height: 132 }}
-                                onChange={(event) => {
-                                    setText(event.target.value)
+                <Stack
+                    direction={{ xs: 'column', sm: 'row' }}
+                    spacing={{ xs: 1, sm: 2, md: 4 }}
+                    justifyContent="center"
+                    alignItems="center"
+                >
+                    <Card variant="outlined" sx={{ boxShadow: 2 }}>
+                        <Typography
+                            level="h1"
+                            fontWeight="xl"
+                            textAlign="center"
+                            sx={{ mb: 6, mt: 3 }}
+                        >
+                            Script Vocab
+                        </Typography>
+                        <FormControl sx={{ flex: 1, gap: 1 }}>
+                            <ToggleGroup
+                                label="Input Type"
+                                options={[
+                                    { label: 'Text', value: 'text' },
+                                    { label: 'File', value: 'file' },
+                                ]}
+                                onChange={(value) => {
+                                    setTextOrFile(value)
                                 }}
                             />
-                        ) :
-                            <DropZone
-                                onDrop={(files) => {
-                                    console.log(files[0]);
-
-                                    setFile(files[0]);
-                                }
-                                }
+                            {textOrFile === 'text' ? (
+                                <Textarea
+                                    placeholder="Enter text here"
+                                    sx={{ height: 132, width: 300 }}
+                                    onChange={(event) => {
+                                        setText(event.target.value)
+                                    }}
+                                />
+                            ) :
+                                <DropZone
+                                    onDrop={(files) => {
+                                        setFile(files[0]);
+                                    }
+                                    }
+                                    sx={{ height: 132, width: 300 }}
+                                />
+                            }
+                            <LanguageSelector label='Input Language' options={[{ code: 'auto', label: 'Auto' }, ...possibleLanguages]}
+                                onChange={(value) => {
+                                    setInputLanguage(value)
+                                }}
                             />
-                        }
-                        <LanguageSelector label='Input Language' options={[{ code: 'auto', label: 'Auto' }, ...possibleLanguages]}
-                            onChange={(value) => {
-                                setInputLanguage(value)
-                            }}
+                            <LanguageSelector label='Output Language' options={possibleLanguages}
+                                onChange={(value) => {
+                                    setOutputLanguage(value)
+                                }} />
+                            <div><FormLabel sx={{ mb: 0, mt: 1 }}>Minimum Word Size</FormLabel>
+                                <Slider
+                                    aria-label="Minimum Word Size"
+                                    defaultValue={2}
+                                    onChange={(_e, value) => {
+                                        if (typeof value === 'number') {
+                                            setMinWordSize(value);
+                                        }
+                                    }}
+                                    step={1}
+                                    min={1}
+                                    max={20}
+                                    valueLabelDisplay="auto"
+                                    sx={{ p: 0 }}
+                                /></div>
+                            <div><FormLabel sx={{ mb: 0, mt: 1 }}>Minimum Appearances</FormLabel>
+                                <Slider
+                                    aria-label="Minimum Appearances"
+                                    defaultValue={1}
+                                    onChange={(_e, value) => {
+                                        if (typeof value === 'number') {
+                                            setMinAppearances(value);
+                                        }
+                                    }}
+                                    step={1}
+                                    min={1}
+                                    max={20}
+                                    valueLabelDisplay="auto"
+                                    sx={{ p: 0 }}
+                                /></div>
+
+                            <Button
+                                loading={loading}
+                                onClick={handleSubmit}
+                                sx={{ mt: 2 }}>
+                                Submit
+                            </Button>
+                        </FormControl>
+                    </Card>
+                    {response && (
+                        <DataGrid
+                            sx={{ p: 1, borderRadius: 2, boxShadow: 2 }}
+                            rows={response.data}
+                            columns={responseGridColumns}
+                            getRowId={(row) => row.original_text}
+
                         />
-                        <LanguageSelector label='Output Language' options={possibleLanguages}
-                            onChange={(value) => {
-                                setOutputLanguage(value)
-                            }} />
-                        <div><FormLabel>Minimum Word Size</FormLabel>
-                            <Slider
-                                aria-label="Minimum Word Size"
-                                defaultValue={2}
-                                onChange={(_e, value) => {
-                                    if (typeof value === 'number') {
-                                        setMinWordSize(value);
-                                    }
-                                }}
-                                step={1}
-                                marks
-                                min={1}
-                                max={20}
-                                valueLabelDisplay="auto"
-                            /></div>
-                        <div><FormLabel>Minimum Appearances</FormLabel>
-                            <Slider
-                                aria-label="Minimum Appearances"
-                                defaultValue={1}
-                                onChange={(_e, value) => {
-                                    if (typeof value === 'number') {
-                                        setMinAppearances(value);
-                                    }
-                                }}
-                                step={1}
-                                marks
-                                min={1}
-                                max={20}
-                                valueLabelDisplay="auto"
-                            /></div>
-
-                        <Button
-                            loading={loading}
-                            onClick={handleSubmit}
-                            sx={{ mt: 2 }}>
-                            Submit
-                        </Button>
-                    </FormControl>
-                </Card>
-                {response && (
-                    <DataGrid
-                        sx={{ p: 1, borderRadius: 2, boxShadow: 2 }}
-                        rows={response.data}
-                        columns={responseGridColumns}
-                        getRowId={(row) => row.original_text}
-
-                    />
-                )}
-            </Stack>
-        </Grid>
-    </Box>
+                    )}
+                </Stack>
+            </Grid>
+        </Box>
     );
 };
