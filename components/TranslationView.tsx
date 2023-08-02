@@ -44,8 +44,10 @@ export const TranslationView: React.FC = () => {
             } else if (file !== null) {
                 formData.append('file', file);
             }
-
-            const res = await axios.post('http://127.0.0.1:8000/translate/', formData);
+            if (process.env.SCRIPT_VOCAB_API_URL === undefined) {
+                throw new Error('SCRIPT_VOCAB_API_URL not defined');
+            }
+            const res = await axios.post(process.env.SCRIPT_VOCAB_API_URL, formData);
             setResponse(res);
         } catch (error) {
             console.error(error);
