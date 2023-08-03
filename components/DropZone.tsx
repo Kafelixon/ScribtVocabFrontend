@@ -1,7 +1,7 @@
-import { Typography, Card, Box } from '@mui/joy';
+import { Typography, Box } from '@mui/joy';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { DragEvent, useState } from 'react';
-import {styled } from '@mui/joy/styles';
+import { styled } from '@mui/joy/styles';
 
 const Root = styled("div")(({ theme }) => ({
     display: 'flex',
@@ -21,12 +21,10 @@ interface DropZoneProps {
 }
 
 export default function DropZone({ onDrop }: DropZoneProps) {
-    const [highlight, setHighlight] = useState(false);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     const handleDragEnter = (event: DragEvent<HTMLDivElement>) => {
         event.preventDefault();
-        setHighlight(true);
     };
 
     const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
@@ -35,12 +33,10 @@ export default function DropZone({ onDrop }: DropZoneProps) {
 
     const handleDragLeave = (event: DragEvent<HTMLDivElement>) => {
         event.preventDefault();
-        setHighlight(false);
     };
 
     const handleDrop = (event: DragEvent<HTMLDivElement>) => {
         event.preventDefault();
-        setHighlight(false);
         const files = Array.from(event.dataTransfer.files);
         setSelectedFile(files[0]);
         onDrop(files);

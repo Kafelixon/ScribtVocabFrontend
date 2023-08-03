@@ -32,7 +32,7 @@ export default function ToggleGroup({ label, options, onChange }: ToggleGroupPro
                 }}
             >
                 {options.map((option) => (
-                    <Button value={option.value} sx={{ width: 150 }}>{option.label}</Button>
+                    <Button key={option.value} value={option.value} sx={{ width: 150 }}>{option.label}</Button>
                 ))}
             </ToggleButtonGroup>
         </>

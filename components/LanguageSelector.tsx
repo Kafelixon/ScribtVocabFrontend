@@ -13,7 +13,7 @@ interface SelectorProps {
     onChange: OnChangeCallback;
 }
 
-export default function Selector({ label, options, onChange}: SelectorProps) {
+export default function Selector({ label, options, onChange }: SelectorProps) {
     return (
         <FormControl
         ><div>
@@ -29,7 +29,7 @@ export default function Selector({ label, options, onChange}: SelectorProps) {
                         }
                     }}
                     renderOption={(optionProps, option) => (
-                        <AutocompleteOption {...optionProps}>
+                        <AutocompleteOption {...optionProps} sx={{ color: "inherit", ":hover": { color: "inherit" } }}>
                             {option.label.charAt(0).toUpperCase() + option.label.slice(1)}
                         </AutocompleteOption>
                     )}

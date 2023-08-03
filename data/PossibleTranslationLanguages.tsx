@@ -1,6 +1,6 @@
 import { SelectorOption } from '../components/LanguageSelector';
 
-export const possibleLanguages: SelectorOption[] = [
+export const PossibleTranslationLanguages: SelectorOption[] = [
     { label: 'English', code: 'en'},
     { label: 'Chinese', code: 'zh'},
     { label: 'Arabic', code: 'ar'},
