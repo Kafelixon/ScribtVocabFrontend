@@ -16,11 +16,16 @@
     "@mui/joy": "^5.0.0-alpha.88",
     "@mui/material": "^5.14.0",
     "@mui/x-data-grid": "^6.10.1",
+    "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
     "dotenv": "^16.3.1",
     "firebase": "^10.1.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.1.2",
+    "redux": "^4.2.1",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.4.2"
   },
   "devDependencies": {
     "@types/node": "^20.4.1",

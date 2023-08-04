@@ -28,4 +28,4 @@ dist-ssr
 .firebaserc
 .firebase/*
 firebase.json
-
+firebaseSetup.ts
