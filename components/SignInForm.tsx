@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { auth } from '../src/firebaseSetup';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, UserCredential } from "firebase/auth";
-import { login, logout } from '../redux/slices/userSlice';
+import { login } from '../redux/slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useUserSettings } from "../data/userSettings";
+
 
 import { Button, Card, Input, Typography } from '@mui/joy';
 import { Google } from '@mui/icons-material';
@@ -15,7 +17,10 @@ export const SignInForm = () => {
     const provider = new GoogleAuthProvider();
     const dispatch = useDispatch();
     const userState = useSelector((state: any) => state.user);
+    const uid = userState.user ? userState.user.uid : null;
 
+    const { getUserSettings, setUserSettings } = useUserSettings(uid);
+    
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
@@ -25,7 +30,9 @@ export const SignInForm = () => {
             } else {
                 userCredential = await createUserWithEmailAndPassword(auth, email, password);
             }
+            console.log(getUserSettings());
             dispatchLogin(userCredential);
+            setUserSettings("dark");
         } catch (error: any) {
             console.error(error.code, error.message);
         }
@@ -50,7 +57,6 @@ export const SignInForm = () => {
     if (userState.user) {
         return <div>
             Hello {' '} {userState.user.email} {' '}
-            <Button onClick={() => dispatch(logout())}>Logout</Button>
         </div>;
     }
     return (
@@ -83,7 +89,7 @@ export const SignInForm = () => {
                 </Button>
             </form>
 
-            <Typography level="body3" sx={{ textAlign: "center", mb: -1, color: "var(--bs-palette-text-primary)" }}>
+            <Typography level="body-xs" sx={{ textAlign: "center", mb: -1, color: "var(--bs-palette-text-primary)" }}>
                 {registered ? "Don't have an account? " : "Already have an account? "}
                 <a onClick={() => setRegistered(!registered)}
                     style={{ cursor: "pointer", color: "var(--bs-palette-primary-600)" }}

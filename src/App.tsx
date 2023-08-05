@@ -12,15 +12,16 @@ const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-
         <CssVarsProvider theme={theme}>
-
           <SignInForm />
-          <ModeToggle sx={{
-            position: 'absolute',
-            top: 15,
-            right: 15
-          }} />
+          
+          <ModeToggle
+            sx={{
+              position: "absolute",
+              top: 15,
+              right: 15,
+            }}
+          />
           {/* <TranslationView /> */}
         </CssVarsProvider>
       </PersistGate>
