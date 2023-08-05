@@ -5,7 +5,7 @@ import { store, persistor } from '../redux/store';
 
 import { CssVarsProvider } from '@mui/joy/styles';
 import { theme } from './theme';
-import { ModeToggle } from '../components/ModeToggle';
+import { TopMenu } from "../components/TopMenu";
 import { SignInForm } from '../components/SignInForm';
 
 const App = () => {
@@ -14,14 +14,7 @@ const App = () => {
       <PersistGate loading={null} persistor={persistor}>
         <CssVarsProvider theme={theme}>
           <SignInForm />
-          
-          <ModeToggle
-            sx={{
-              position: "absolute",
-              top: 15,
-              right: 15,
-            }}
-          />
+          <TopMenu />
           {/* <TranslationView /> */}
         </CssVarsProvider>
       </PersistGate>
