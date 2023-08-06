@@ -1,30 +1,34 @@
-import { DarkMode, LightMode, MoreVert } from '@mui/icons-material';
-import { Box,Button, Dropdown, IconButton, Menu, MenuButton, MenuItem } from '@mui/joy';
-import { useColorScheme } from '@mui/joy/styles';
-import { logout } from '../redux/slices/userSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { DarkMode, LightMode, MoreVert } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Dropdown,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  Typography,
+} from "@mui/joy";
+import { useColorScheme } from "@mui/joy/styles";
+import { logout } from "../redux/slices/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export function TopMenu() {
+  const navigate = useNavigate();
   const { mode, setMode } = useColorScheme();
   const dispatch = useDispatch();
   const userState = useSelector((state: any) => state.user);
   const uid = userState.user ? userState.user.uid : null;
 
-  // useEffect(() => {
-  //   const loadSettings = async () => {
-  //     const theme = await getUserSettings();
+  const handleSignIn = () => {
+    navigate("/login");
+  };
 
-  //     if (theme) {
-  //       setMode(theme);
-  //     }
-  //   }
+  const handleHomeButton = () => {
+    navigate("/");
+  };
 
-  //   loadSettings();
-  // }, []);
-
-  // useEffect(() => {
-  //   setUserSettings(mode);
-  // }, [mode]);
   return (
     <Box
       sx={{
@@ -37,28 +41,48 @@ export function TopMenu() {
         flexDirection: "row",
         display: "flex",
         alignItems: "end",
-        justifyContent: "flex-end",
+        justifyContent: "space-between",
         gap: 1,
       }}
     >
-      <Button>Sign in</Button>
-      <Dropdown>
-        <MenuButton
-          slots={{ root: IconButton }}
-          slotProps={{ root: { variant: "solid", color: "primary" } }}
+      <Box sx={{ justifySelf: "start" }}>
+        <Typography
+          level="h2"
+          fontWeight="xl"
+          textAlign="center"
+          onClick={handleHomeButton}
         >
-          <MoreVert />
-        </MenuButton>
-        <Menu>
-          <MenuItem onClick={() => setMode(mode === "dark" ? "light" : "dark")}>
-            Mode &nbsp; {mode === "dark" ? <LightMode /> : <DarkMode />}
-          </MenuItem>
-          <MenuItem>Sign in</MenuItem>
-          {uid && (
-            <MenuItem onClick={() => dispatch(logout())}>Logout</MenuItem>
-          )}
-        </Menu>
-      </Dropdown>
+          Script Vocab
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "end",
+          justifyContent: "space-between",
+          gap: 1,
+        }}
+      >
+        {!uid && <Button onClick={handleSignIn}>Sign in</Button>}
+        <Dropdown>
+          <MenuButton
+            slots={{ root: IconButton }}
+            slotProps={{ root: { variant: "solid", color: "primary" } }}
+          >
+            <MoreVert />
+          </MenuButton>
+          <Menu>
+            <MenuItem
+              onClick={() => setMode(mode === "dark" ? "light" : "dark")}
+            >
+              Mode &nbsp; {mode === "dark" ? <LightMode /> : <DarkMode />}
+            </MenuItem>
+            {uid && (
+              <MenuItem onClick={() => dispatch(logout())}>Logout</MenuItem>
+            )}
+          </Menu>
+        </Dropdown>
+      </Box>
     </Box>
   );
 }
