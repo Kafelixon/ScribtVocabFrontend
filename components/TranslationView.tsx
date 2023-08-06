@@ -71,6 +71,7 @@ export const TranslationView: React.FC = () => {
       spacing={{ xs: 1, sm: 2, md: 4,pt:7 }}
       justifyContent="center"
       alignItems="center"
+      mt={12}
     >
       <Card variant="outlined" sx={{ boxShadow: 2 }}>
         <Typography
@@ -79,7 +80,7 @@ export const TranslationView: React.FC = () => {
           textAlign="center"
           sx={{ mb: 4, mt: 1 }}
         >
-          Tanslate
+          Translate
         </Typography>
         <FormControl sx={{ flex: 1, gap: 1, width: 300 }}>
           <ToggleGroup

@@ -33,7 +33,7 @@ export function TopMenu() {
     <Box
       sx={{
         boxSizing: "border-box",
-        position: "absolute",
+        position: "fixed",
         top: 0,
         p: 2,
         width: "100vw",
@@ -43,6 +43,7 @@ export function TopMenu() {
         alignItems: "end",
         justifyContent: "space-between",
         gap: 1,
+        zIndex: 1,
       }}
     >
       <Box sx={{ justifySelf: "start" }}>
