@@ -2,9 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface MyUser {
     uid: string;
-    displayName: string | null;
     email: string | null;
-    photoURL: string | null;
 }
 
 type UserState = {

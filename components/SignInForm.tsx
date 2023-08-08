@@ -6,10 +6,11 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   UserCredential,
+  sendEmailVerification,
 } from "firebase/auth";
 import { login } from "../redux/slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useUserSettings } from "../data/userSettings";
+import { setUserPreferences } from "../data/userPreferences";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { Button, Card, Input, Typography } from "@mui/joy";
@@ -28,8 +29,6 @@ export const SignInForm = () => {
 
   const from = location.state?.from?.pathname || "/";
 
-  const { getUserSettings, setUserSettings } = useUserSettings(uid);
-
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -41,17 +40,34 @@ export const SignInForm = () => {
           password
         );
       } else {
+        if (password.length < 6) {
+          throw new Error("Password must be atleast 6 characters");
+        }
         userCredential = await createUserWithEmailAndPassword(
           auth,
           email,
           password
         );
+        await sendEmailVerification(userCredential.user).catch((err) =>
+          console.log(err)
+        );
       }
-      console.log(getUserSettings());
       dispatchLogin(userCredential);
-      setUserSettings("dark");
+      setUserPreferences(uid, {
+        theme: "dark",
+      });
     } catch (error: any) {
-      console.error(error.code, error.message);
+      handleLoginError(error);
+    }
+  };
+
+  const handleLoginError = (error: any) => {
+    if (error.code === "auth/email-already-in-use") {
+      setError("email", { message: error.message });
+    } else if (error.code === "auth/invalid-email") {
+      setError("email", { message: error.message });
+    } else if (error.code === "auth/wrong-password") {
+      setError("password", { message: error.message });
     }
   };
 
@@ -61,13 +77,13 @@ export const SignInForm = () => {
       const result = await signInWithPopup(auth, provider);
       dispatchLogin(result);
     } catch (error: any) {
-      console.error(error.code, error.message, error.customData?.email);
+      handleLoginError(error);
     }
   };
 
   const dispatchLogin = (credential: UserCredential) => {
-    const { uid, displayName, email, photoURL } = credential.user;
-    dispatch(login({ uid, displayName, email, photoURL }));
+    const { uid, email } = credential.user;
+    dispatch(login({ uid, email }));
     navigate(from, { replace: true });
   };
 
@@ -128,3 +144,8 @@ export const SignInForm = () => {
 };
 
 export default SignInForm;
+
+function setError(arg0: string, arg1: { message: any }) {
+  console.log(arg0, arg1);
+  throw new Error("Function not implemented.");
+}
