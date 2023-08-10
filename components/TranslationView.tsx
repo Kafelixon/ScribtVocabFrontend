@@ -16,6 +16,8 @@ import DropZone from "../components/DropZone";
 import axios from "axios";
 import TranslatedResponseTable from "../components/TranslatedResponseTable";
 import { API_URL } from "../config";
+import { saveToUserDictionary } from "../data/userDictionary";
+import { auth } from "../src/firebaseSetup";
 
 interface APIResponse {
   data: any;
@@ -31,7 +33,18 @@ export const TranslationView: React.FC = () => {
   const [minWordSize, setMinWordSize] = useState<number>(2);
   const [minAppearances, setMinAppearances] = useState<number>(1);
 
+  const userId = auth.currentUser?.uid; // Assuming you have user already authenticated
+
   const [loading, setLoading] = useState(false);
+
+  const handleSaveToDictionary = () => {
+    if (response && userId) {
+      saveToUserDictionary(userId, response.data).then(() => {
+        alert("Saved to user dictionary!");
+      });
+    }
+  };
+
   const handleSubmit = async () => {
     setLoading(true);
 
@@ -68,7 +81,7 @@ export const TranslationView: React.FC = () => {
   return (
     <Stack
       direction={{ xs: "column", sm: "row" }}
-      spacing={{ xs: 1, sm: 2, md: 4,pt:7 }}
+      spacing={{ xs: 1, sm: 2, md: 4, pt: 7 }}
       justifyContent="center"
       alignItems="center"
       mt={12}
@@ -166,7 +179,14 @@ export const TranslationView: React.FC = () => {
           </Button>
         </FormControl>
       </Card>
-      {response && <TranslatedResponseTable response={response} />}
+      {response && (
+        <>
+          <TranslatedResponseTable response={response} />
+          <Button onClick={handleSaveToDictionary} sx={{ mt: 2 }}>
+            Save to Dictionary
+          </Button>
+        </>
+      )}
     </Stack>
   );
 };

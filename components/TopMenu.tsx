@@ -39,12 +39,20 @@ export function TopMenu() {
     }
   };
 
-  const handleSignIn = () => {
+  const navigateToSignIn = () => {
     navigate("/login");
   };
 
-  const handleHomeButton = () => {
+  const navigateToHome = () => {
     navigate("/");
+  };
+
+  const navigateToTranslation = () => {
+    navigate("/");
+  };
+
+  const navigateToPersonalDictionary = () => {
+    navigate("/dictionary");
   };
 
   const handleThemeChange = () => {
@@ -82,7 +90,7 @@ export function TopMenu() {
           level="h2"
           fontWeight="xl"
           textAlign="center"
-          onClick={handleHomeButton}
+          onClick={navigateToHome}
         >
           Script Vocab
         </Typography>
@@ -95,7 +103,7 @@ export function TopMenu() {
           gap: 1,
         }}
       >
-        {!uid && <Button onClick={handleSignIn}>Sign in</Button>}
+        {!uid && <Button onClick={navigateToSignIn}>Sign in</Button>}
         <Dropdown>
           <MenuButton
             slots={{ root: IconButton }}
@@ -104,6 +112,12 @@ export function TopMenu() {
             <MoreVert />
           </MenuButton>
           <Menu>
+            <MenuItem onClick={navigateToTranslation}>Translation</MenuItem>
+            {uid && (
+              <MenuItem onClick={navigateToPersonalDictionary}>
+                Dictionary
+              </MenuItem>
+            )}
             <MenuItem onClick={handleThemeChange}>
               Mode &nbsp; {mode === "dark" ? <LightMode /> : <DarkMode />}
             </MenuItem>
