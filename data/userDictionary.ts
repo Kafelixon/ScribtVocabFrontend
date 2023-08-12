@@ -6,10 +6,25 @@ import {
   getDocs,
   writeBatch,
   getDoc,
+  query,
+  orderBy,
 } from "firebase/firestore";
 
 const userDictionaryRef = (userId: string) =>
   collection(doc(collection(firestore, "users"), userId), "dictionary");
+
+const updateOccurrences = async (
+  record: ResponseData,
+  docRef: any
+): Promise<number> => {
+  const currentDoc = await getDoc(docRef);
+  if (currentDoc.exists()) {
+    const currentData = currentDoc.data() as ResponseData;
+    return Number(record.occurrences) + Number(currentData.occurrences);
+  }
+  return Number(record.occurrences);
+};
+
 export const saveToUserDictionary = async (
   userId: string,
   responseData: ResponseData[]
@@ -24,17 +39,8 @@ export const saveToUserDictionary = async (
       continue;
     }
 
-    const docRef = doc(
-      collection(firestore, "users", userId, "dictionary"),
-      record.original_text
-    );
-
-    const currentDoc = await getDoc(docRef);
-    if (currentDoc.exists()) {
-      const currentData = currentDoc.data() as ResponseData;
-      record.occurrences =
-        Number(record.occurrences) + Number(currentData.occurrences);
-    }
+    const docRef = doc(userDictionaryRef(userId), record.original_text);
+    record.occurrences = await updateOccurrences(record, docRef);
 
     batch.set(docRef, record, { merge: true });
   }
@@ -42,15 +48,9 @@ export const saveToUserDictionary = async (
   await batch.commit();
 };
 
-import { query, orderBy } from "firebase/firestore";
-
 export const fetchUserDictionary = async (userId: string) => {
   const q = query(userDictionaryRef(userId), orderBy("occurrences", "desc"));
   const snapshot = await getDocs(q);
 
-  const dictionary: ResponseData[] = [];
-  snapshot.forEach((docSnap) =>
-    dictionary.push(docSnap.data() as ResponseData)
-  );
-  return dictionary;
+  return snapshot.docs.map((docSnap) => docSnap.data() as ResponseData);
 };
