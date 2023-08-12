@@ -9,6 +9,7 @@ import { theme } from "./theme";
 import { TopMenu } from "../components/TopMenu";
 import { SignInForm } from "../components/SignInForm";
 import { PersonalDictionary } from "../components/PersonalDictionary";
+import { SettingsPage } from "../components/SettingsPage";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
               <Route path="/" element={<TranslationView />} />
               <Route path="/login" element={<SignInForm />} />
               <Route path="/dictionary" element={<PersonalDictionary />} />
+              <Route path="/settings" element={<SettingsPage />} />
             </Route>
           </Routes>
         </CssVarsProvider>

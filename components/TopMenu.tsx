@@ -55,6 +55,10 @@ export function TopMenu() {
     navigate("/dictionary");
   };
 
+  const navigateToSettingsPage = () => {
+    navigate("/settings");
+  };
+
   const handleThemeChange = () => {
     if (uid) {
       updateUserPreferences(uid, { theme: mode === "dark" ? "light" : "dark" });
@@ -121,6 +125,7 @@ export function TopMenu() {
             <MenuItem onClick={handleThemeChange}>
               Mode &nbsp; {mode === "dark" ? <LightMode /> : <DarkMode />}
             </MenuItem>
+            <MenuItem onClick={navigateToSettingsPage}>Settings</MenuItem>
             {uid && (
               <MenuItem onClick={() => dispatch(logout())}>Logout</MenuItem>
             )}
