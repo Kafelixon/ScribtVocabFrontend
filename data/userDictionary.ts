@@ -54,3 +54,19 @@ export const fetchUserDictionary = async (userId: string) => {
 
   return snapshot.docs.map((docSnap) => docSnap.data() as ResponseData);
 };
+
+export const removeFromUserDictionary = async (
+  userId: string,
+  recordsToRemove: string[]
+) => {
+  if (!userId) throw new Error("User ID is not provided.");
+
+  const batch = writeBatch(firestore);
+
+  for (const recordId of recordsToRemove) {
+    const docRef = doc(userDictionaryRef(userId), recordId);
+    batch.delete(docRef);
+  }
+
+  await batch.commit();
+};

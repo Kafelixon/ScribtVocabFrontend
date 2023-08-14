@@ -1,16 +1,23 @@
 import Table from "@mui/joy/Table";
 import Sheet from "@mui/joy/Sheet";
 import Card from "@mui/joy/Card";
+import Checkbox from "@mui/joy/Checkbox";
 import { ResponseData } from "../src/types";
 
 interface TranslatedResponseTableProps {
   response: {
     data: ResponseData[];
   };
+  isEditMode?: boolean;
+  selectedRecords?: string[];
+  onSelectRecord?: (recordId: string) => void;
 }
 
 export default function TranslatedResponseTable({
   response,
+  isEditMode = false,
+  selectedRecords = [],
+  onSelectRecord,
 }: TranslatedResponseTableProps) {
   return (
     <Card
@@ -26,6 +33,7 @@ export default function TranslatedResponseTable({
         >
           <thead>
             <tr>
+              {isEditMode && <th>Select</th>}
               <th style={{ borderRadius: 0 }}>Occurrences</th>
               <th>Original Text</th>
               <th style={{ borderRadius: 0 }}>Translated Text</th>
@@ -34,7 +42,24 @@ export default function TranslatedResponseTable({
           <tbody>
             {response &&
               response.data.map((row) => (
-                <tr key={row.original_text}>
+                <tr
+                  key={row.original_text}
+                  style={{
+                    backgroundColor: selectedRecords.includes(row.original_text)
+                      ? "#f5f5f5"
+                      : "transparent",
+                  }}
+                >
+                  {isEditMode && (
+                    <td>
+                      <Checkbox
+                        checked={selectedRecords.includes(row.original_text)}
+                        onChange={() =>
+                          onSelectRecord && onSelectRecord(row.original_text)
+                        }
+                      />
+                    </td>
+                  )}
                   <td>{row.occurrences}</td>
                   <td>{row.original_text}</td>
                   <td>{row.translated_text}</td>
