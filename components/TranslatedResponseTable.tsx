@@ -25,12 +25,7 @@ export default function TranslatedResponseTable({
       sx={{ boxShadow: 2, width: { xs: 300, sm: "auto" }, maxWidth: "80vw" }}
     >
       <Sheet sx={{ overflow: "auto" }}>
-        <Table
-          aria-label="translated text table"
-          stickyHeader
-          stripe="odd"
-          hoverRow
-        >
+        <Table aria-label="translated text table" stickyHeader hoverRow>
           <thead>
             <tr>
               {isEditMode && <th>Select</th>}
@@ -42,14 +37,7 @@ export default function TranslatedResponseTable({
           <tbody>
             {response &&
               response.data.map((row) => (
-                <tr
-                  key={row.original_text}
-                  style={{
-                    backgroundColor: selectedRecords.includes(row.original_text)
-                      ? "#f5f5f5"
-                      : "transparent",
-                  }}
-                >
+                <tr key={row.original_text}>
                   {isEditMode && (
                     <td>
                       <Checkbox

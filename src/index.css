@@ -5,8 +5,10 @@
 
   color-scheme: light dark;
   background-color: var(--bs-palette-background-surface);
-  color: var(--bs-palette-text-primary);
-  caret-color: var(--bs-palette-neutral-800);
+  color: var(--light-font-color);
+  caret-color: var(--light-font-color);
+  --dark-font-color: #ffffff;
+  --light-font-color: #5e463b;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

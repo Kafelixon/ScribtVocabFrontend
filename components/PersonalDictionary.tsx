@@ -10,7 +10,7 @@ export const PersonalDictionary: React.FC = () => {
     null
   );
   const [userId, setUserId] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [selectedRecords, setSelectedRecords] = useState<string[]>([]); // Assuming records have unique IDs.
 
