@@ -48,7 +48,7 @@ export function TopMenu() {
   };
 
   const navigateToTranslation = () => {
-    navigate("/");
+    navigate("/translate");
   };
 
   const navigateToPersonalDictionary = () => {

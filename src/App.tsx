@@ -10,6 +10,7 @@ import { TopMenu } from "../components/TopMenu";
 import { SignInForm } from "../components/SignInForm";
 import { PersonalDictionary } from "../components/PersonalDictionary";
 import { SettingsPage } from "../components/SettingsPage";
+import { LandingPage } from "../components/LandingPage";
 
 const App = () => {
   return (
@@ -19,7 +20,8 @@ const App = () => {
           <TopMenu />
           <Routes>
             <Route element={<Outlet />}>
-              <Route path="/" element={<TranslationView />} />
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/translate" element={<TranslationView />} />
               <Route path="/login" element={<SignInForm />} />
               <Route path="/dictionary" element={<PersonalDictionary />} />
               <Route path="/settings" element={<SettingsPage />} />
