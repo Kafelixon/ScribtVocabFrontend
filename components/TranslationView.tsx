@@ -13,7 +13,7 @@ import ToggleGroup from "../components/ToggleGroup";
 import LanguageSelector from "../components/LanguageSelector";
 import { PossibleTranslationLanguages } from "../data/PossibleTranslationLanguages";
 import DropZone from "../components/DropZone";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import TranslatedResponseTable from "../components/TranslatedResponseTable";
 import { API_URL } from "../config";
 import { saveToUserDictionary } from "../data/userDictionary";
