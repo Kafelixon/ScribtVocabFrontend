@@ -13,7 +13,7 @@ import ToggleGroup from "../components/ToggleGroup";
 import LanguageSelector from "../components/LanguageSelector";
 import { PossibleTranslationLanguages } from "../data/PossibleTranslationLanguages";
 import DropZone from "../components/DropZone";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import TranslatedResponseTable from "../components/TranslatedResponseTable";
 import { API_URL } from "../config";
 import { saveToUserDictionary } from "../data/userDictionary";
@@ -70,8 +70,17 @@ export const TranslationView: React.FC = () => {
         throw new Error("API_URL not defined");
       }
       const res = await axios.post(API_URL, formData);
+      console.log(res);
+
       setResponse(res);
     } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.code === " ERR_NETWORK"){
+          alert("The backend server is not running.");
+        } else {  
+          console.log("this" + error);
+        }
+      }
       console.error(error);
     } finally {
       setLoading(false);
