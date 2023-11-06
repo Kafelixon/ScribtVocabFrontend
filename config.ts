@@ -1,1 +1,2 @@
-export const API_URL = 'http://127.0.0.1:8000/translate/';
+export const API_URL = "https://script-vocab-api-fvpy4isf3a-lz.a.run.app/translate/";
+// temporary url
