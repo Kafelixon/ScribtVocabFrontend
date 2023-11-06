@@ -16,8 +16,6 @@ import DropZone from "../components/DropZone";
 import axios from "axios";
 import TranslatedResponseTable from "../components/TranslatedResponseTable";
 import { API_URL } from "../config";
-import { saveToUserDictionary } from "../data/userDictionary";
-import { auth } from "../src/firebaseSetup";
 
 interface APIResponse {
   data: any;
@@ -33,17 +31,7 @@ export const TranslationView: React.FC = () => {
   const [minWordSize, setMinWordSize] = useState<number>(2);
   const [minAppearances, setMinAppearances] = useState<number>(1);
 
-  const userId = auth.currentUser?.uid; // Assuming you have user already authenticated
-
   const [loading, setLoading] = useState(false);
-
-  const handleSaveToDictionary = () => {
-    if (response && userId) {
-      saveToUserDictionary(userId, response.data).then(() => {
-        alert("Saved to user dictionary!");
-      });
-    }
-  };
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -75,9 +63,9 @@ export const TranslationView: React.FC = () => {
       setResponse(res);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        if (error.code === " ERR_NETWORK"){
+        if (error.code === " ERR_NETWORK") {
           alert("The backend server is not running.");
-        } else {  
+        } else {
           console.log("this" + error);
         }
       }
@@ -89,11 +77,12 @@ export const TranslationView: React.FC = () => {
 
   return (
     <Stack
-      direction={{ xs: "column", sm: "row" }}
+      direction={{ xs: "column", md: "row" }}
       spacing={{ xs: 1, sm: 2, md: 4, pt: 7 }}
       justifyContent="center"
       alignItems="center"
       mt={12}
+      marginX={{ xs: 2, sm: 4, md: 8 }}
     >
       <Card variant="outlined" sx={{ boxShadow: 2 }}>
         <Typography
@@ -118,6 +107,7 @@ export const TranslationView: React.FC = () => {
           {textOrFile === "text" ? (
             <Textarea
               placeholder="Enter text here"
+              defaultValue="Try to put text longer than 4 lines."
               sx={{ height: 132 }}
               onChange={(event) => {
                 setText(event.target.value);
@@ -188,14 +178,7 @@ export const TranslationView: React.FC = () => {
           </Button>
         </FormControl>
       </Card>
-      {response && (
-        <>
-          <TranslatedResponseTable response={response} />
-          <Button onClick={handleSaveToDictionary} sx={{ mt: 2 }}>
-            Save to Dictionary
-          </Button>
-        </>
-      )}
+      {response && <TranslatedResponseTable response={response} />}
     </Stack>
   );
 };

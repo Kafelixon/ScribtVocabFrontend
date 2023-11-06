@@ -3,6 +3,9 @@ import Sheet from "@mui/joy/Sheet";
 import Card from "@mui/joy/Card";
 import Checkbox from "@mui/joy/Checkbox";
 import { ResponseData } from "../src/types";
+import Button from "@mui/joy/Button";
+import { saveToUserDictionary } from "../data/userDictionary";
+import { auth } from "../src/firebaseSetup";
 
 interface TranslatedResponseTableProps {
   response: {
@@ -19,10 +22,21 @@ export default function TranslatedResponseTable({
   selectedRecords = [],
   onSelectRecord,
 }: TranslatedResponseTableProps) {
+
+  const userId = auth.currentUser?.uid;
+
+  const handleSaveToDictionary = () => {
+    if (response && userId) {
+      saveToUserDictionary(userId, response.data).then(() => {
+        alert("Saved to user dictionary!");
+      });
+    }
+  };
+  // TODO: Add maxHeight and scroll to table
   return (
     <Card
       variant="outlined"
-      sx={{ boxShadow: 2, width: { xs: 300, sm: "auto" }, maxWidth: "80vw" }}
+      sx={{ boxShadow: 2, width: { xs: 300, sm: "auto" }, maxWidth: "80vw", alignItems: "center" }}
     >
       <Sheet sx={{ overflow: "auto" }}>
         <Table aria-label="translated text table" stickyHeader hoverRow>
@@ -56,6 +70,9 @@ export default function TranslatedResponseTable({
           </tbody>
         </Table>
       </Sheet>
+      <Button onClick={handleSaveToDictionary} sx={{ mt: 2, width: 300}}>
+        Save to Dictionary
+      </Button>
     </Card>
   );
 }
