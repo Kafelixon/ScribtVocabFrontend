@@ -3,25 +3,16 @@ import {
   Button,
   Typography,
   Input,
-  Card,
   FormLabel,
   FormControl,
   Divider,
 } from "@mui/joy";
 import { auth } from "../src/firebaseSetup";
+import StyledCard from "../components/StyledCard";
 
 export const SettingsPage = () => {
   return (
-    <Card
-      variant="outlined"
-      sx={{
-        boxShadow: 2,
-        alignItems: "center",
-        maxWidth: 300,
-        flexGrow: 1,
-        boxSizing: "border-box",
-      }}
-    >
+    <StyledCard>
       <Typography level="h3" mb={2}>
         Settings
       </Typography>
@@ -31,7 +22,7 @@ export const SettingsPage = () => {
       <ChangeEmail />
       <Divider />
       <RemoveAccount />
-    </Card>
+    </StyledCard>
   );
 };
 

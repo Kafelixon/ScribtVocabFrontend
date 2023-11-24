@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Card, Input, Typography } from "@mui/joy";
 import { Google } from "@mui/icons-material";
 import { loginUser, loginWithGoogle } from "./authHandlers";
+import StyledCard from "./StyledCard";
 
 export const SignInForm = () => {
   const [email, setEmail] = useState("");
@@ -45,10 +46,10 @@ export const SignInForm = () => {
   };
 
   return (
-    <Card variant="outlined" sx={{ boxShadow: 2, py: 3 }}>
+    <StyledCard>
       <form
         onSubmit={handleLogin}
-        style={{ display: "flex", flexDirection: "column", gap: "8px" }}
+        style={{ display: "flex", flexDirection: "column", gap: "8px", padding: "8px 0"}}
       >
         {renderEmailInput(email, setEmail)}
         {renderPasswordInput(password, setPassword)}
@@ -56,7 +57,7 @@ export const SignInForm = () => {
         {renderGoogleLoginButton(handleGoogleLogin)}
       </form>
       {renderToggleRegisterLogin(registered, setRegistered)}
-    </Card>
+    </StyledCard>
   );
 };
 
