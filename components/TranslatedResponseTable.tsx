@@ -30,13 +30,18 @@ export default function TranslatedResponseTable({
     }
   };
 
+  const tableHeaderStyle = {
+    verticalAlign: "middle",
+    borderRadius: 0,
+  };
+
   return (
     <Sheet sx={{ overflow: "auto" }}>
       <Table aria-label="translated text table" stickyHeader hoverRow>
         <thead>
           <tr>
             {isEditMode && (
-              <th style={{ width: 30 }}>
+              <th style={{ ...tableHeaderStyle, width: 30 }}>
                 <Checkbox
                   sx={{ p: "5px" }}
                   checked={selectedRecords.length === response.data.length}
@@ -44,9 +49,9 @@ export default function TranslatedResponseTable({
                 />
               </th>
             )}
-            <th style={{ borderRadius: 0, width: 100 }}>Occurrences</th>
-            <th>Original Text</th>
-            <th style={{ borderRadius: 0 }}>Translated Text</th>
+            <th style={{ ...tableHeaderStyle, width: 100 }}>Occurrences</th>
+            <th style={{ ...tableHeaderStyle }}>Original Text</th>
+            <th style={{ ...tableHeaderStyle }}>Translated Text</th>
           </tr>
         </thead>
         <tbody>
