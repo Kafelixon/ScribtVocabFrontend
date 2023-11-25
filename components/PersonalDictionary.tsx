@@ -43,22 +43,6 @@ export const PersonalDictionary: React.FC = () => {
     }
   }, [userId]);
 
-  const areAllSelected = userDictionary
-    ? selectedRecords.length === userDictionary.length
-    : false;
-
-  const toggleSelectAll = () => {
-    if (areAllSelected) {
-      setSelectedRecords([]);
-    } else {
-      if (userDictionary) {
-        setSelectedRecords(
-          userDictionary.map((record) => record.original_text)
-        );
-      }
-    }
-  };
-
   const removeSelected = async () => {
     if (!userId) {
       console.error("User ID is missing.");
@@ -109,9 +93,6 @@ export const PersonalDictionary: React.FC = () => {
             <h1 style={{ alignSelf: "start" }}>Personal Dictionary</h1>
             {isEditMode ? (
               <Stack direction="row" gap={1}>
-                <Button onClick={toggleSelectAll}>
-                  {areAllSelected ? "Deselect All" : "Select All"}
-                </Button>
                 <Button onClick={removeSelected}>Remove</Button>
                 <Button onClick={cancelEditMode}>Cancel</Button>
               </Stack>

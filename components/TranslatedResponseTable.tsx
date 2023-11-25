@@ -18,13 +18,33 @@ export default function TranslatedResponseTable({
   selectedRecords = [],
   onSelectRecord,
 }: TranslatedResponseTableProps) {
+  const handleSelectAllRecords = () => {
+    if (onSelectRecord) {
+      if (selectedRecords.length === response.data.length) {
+        // Deselect all records
+        selectedRecords.forEach((recordId) => onSelectRecord(recordId));
+      } else {
+        // Select all records
+        response.data.forEach((row) => onSelectRecord(row.original_text));
+      }
+    }
+  };
+
   return (
     <Sheet sx={{ overflow: "auto" }}>
       <Table aria-label="translated text table" stickyHeader hoverRow>
         <thead>
           <tr>
-            {isEditMode && <th>Select</th>}
-            <th style={{ borderRadius: 0 }}>Occurrences</th>
+            {isEditMode && (
+              <th style={{ width: 30 }}>
+                <Checkbox
+                  sx={{ p: "5px" }}
+                  checked={selectedRecords.length === response.data.length}
+                  onChange={handleSelectAllRecords}
+                />
+              </th>
+            )}
+            <th style={{ borderRadius: 0, width: 100 }}>Occurrences</th>
             <th>Original Text</th>
             <th style={{ borderRadius: 0 }}>Translated Text</th>
           </tr>
@@ -36,6 +56,7 @@ export default function TranslatedResponseTable({
                 {isEditMode && (
                   <td>
                     <Checkbox
+                      sx={{ p: "5px" }}
                       checked={selectedRecords.includes(row.original_text)}
                       onChange={() =>
                         onSelectRecord && onSelectRecord(row.original_text)
