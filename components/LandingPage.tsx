@@ -1,4 +1,5 @@
-import { Typography, Card, Stack } from "@mui/joy";
+import { Typography, Stack } from "@mui/joy";
+import StyledCard from "../components/StyledCard";
 
 export const LandingPage = () => {
   return (
@@ -10,7 +11,7 @@ export const LandingPage = () => {
       alignItems="center"
       mt={12}
     >
-      <Card variant="outlined" sx={{ boxShadow: 2, padding:10 }}>
+      <StyledCard>
         <Typography
           level="h1"
           fontWeight="xl"
@@ -42,7 +43,7 @@ export const LandingPage = () => {
             sapien bibendum sapien, vel bibendum sapien elit sed sapien.
           </p>
         </div>
-      </Card>
+      </StyledCard>
     </Stack>
   );
 };

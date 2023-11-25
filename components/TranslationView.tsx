@@ -4,18 +4,20 @@ import {
   Button,
   FormControl,
   Typography,
-  Card,
   Stack,
   Slider,
   FormLabel,
 } from "@mui/joy";
-import ToggleGroup from "../components/ToggleGroup";
+import axios from "axios";
+import { auth } from "../src/firebaseSetup";
+import { API_URL } from "../config";
+import { saveToUserDictionary } from "../data/userDictionary";
+import StyledCard from "../components/StyledCard";
+import DropZone from "../components/DropZone";
 import LanguageSelector from "../components/LanguageSelector";
 import { PossibleTranslationLanguages } from "../data/PossibleTranslationLanguages";
-import DropZone from "../components/DropZone";
-import axios from "axios";
+import ToggleGroup from "../components/ToggleGroup";
 import TranslatedResponseTable from "../components/TranslatedResponseTable";
-import { API_URL } from "../config";
 
 interface APIResponse {
   data: any;
@@ -32,6 +34,7 @@ export const TranslationView: React.FC = () => {
   const [minAppearances, setMinAppearances] = useState<number>(1);
 
   const [loading, setLoading] = useState(false);
+  const userId = auth.currentUser?.uid;
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -75,6 +78,14 @@ export const TranslationView: React.FC = () => {
     }
   };
 
+  const handleSaveToDictionary = () => {
+    if (response && userId) {
+      saveToUserDictionary(userId, response.data).then(() => {
+        alert("Saved to user dictionary!");
+      });
+    }
+  };
+
   return (
     <Stack
       direction={{ xs: "column", md: "row" }}
@@ -84,7 +95,7 @@ export const TranslationView: React.FC = () => {
       mt={12}
       marginX={{ xs: 2, sm: 4, md: 8 }}
     >
-      <Card variant="outlined" sx={{ boxShadow: 2 }}>
+      <StyledCard>
         <Typography
           level="h1"
           fontWeight="xl"
@@ -177,8 +188,15 @@ export const TranslationView: React.FC = () => {
             Submit
           </Button>
         </FormControl>
-      </Card>
-      {response && <TranslatedResponseTable response={response} />}
+      </StyledCard>
+      {response && (
+        <StyledCard>
+          <TranslatedResponseTable response={response} />
+          <Button onClick={handleSaveToDictionary} sx={{ mt: 2, width: 300 }}>
+            Save to Dictionary
+          </Button>
+        </StyledCard>
+      )}
     </Stack>
   );
 };

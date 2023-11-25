@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
-import TranslatedResponseTable from "../components/TranslatedResponseTable"; // You will need to modify this component to support edit mode.
-import { fetchUserDictionary, removeFromUserDictionary } from "../data/userDictionary";
+import TranslatedResponseTable from "../components/TranslatedResponseTable";
+import {
+  fetchUserDictionary,
+  removeFromUserDictionary,
+} from "../data/userDictionary";
 import { ResponseData } from "../src/types";
 import { auth } from "../src/firebaseSetup";
 import { Button, Stack } from "@mui/joy";
+import StyledCard from "../components/StyledCard";
 
 export const PersonalDictionary: React.FC = () => {
   const [userDictionary, setUserDictionary] = useState<ResponseData[] | null>(
@@ -12,7 +16,7 @@ export const PersonalDictionary: React.FC = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  const [selectedRecords, setSelectedRecords] = useState<string[]>([]); // Assuming records have unique IDs.
+  const [selectedRecords, setSelectedRecords] = useState<string[]>([]);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -39,49 +43,32 @@ export const PersonalDictionary: React.FC = () => {
     }
   }, [userId]);
 
-  const areAllSelected = userDictionary
-    ? selectedRecords.length === userDictionary.length
-    : false;
-
-  const toggleSelectAll = () => {
-    if (areAllSelected) {
-      setSelectedRecords([]); // Deselect all
-    } else {
-      if (userDictionary) {
-        setSelectedRecords(
-          userDictionary.map((record) => record.original_text)
-        );
-      }
+  const removeSelected = async () => {
+    if (!userId) {
+      console.error("User ID is missing.");
+      return;
     }
-  };
-
-const removeSelected = async () => {
-  if (!userId) {
-    console.error("User ID is missing.");
-    return;
-  }
-  const confirmDelete = window.confirm(
+    const confirmDelete = window.confirm(
       "Are you sure you want to delete these records? This cannot be undone."
     );
     if (confirmDelete) {
-        try {
-          await removeFromUserDictionary(userId, selectedRecords);
-          setUserDictionary((prev) =>
-            prev
-              ? prev.filter(
-                  (record) => !selectedRecords.includes(record.original_text)
-                )
-              : null
-          );
+      try {
+        await removeFromUserDictionary(userId, selectedRecords);
+        setUserDictionary((prev) =>
+          prev
+            ? prev.filter(
+                (record) => !selectedRecords.includes(record.original_text)
+              )
+            : null
+        );
 
-          setSelectedRecords([]);
-          setIsEditMode(false);
-        } catch (error) {
-          console.error("Error removing selected records:", error);
-        }
+        setSelectedRecords([]);
+        setIsEditMode(false);
+      } catch (error) {
+        console.error("Error removing selected records:", error);
+      }
     }
-};
-
+  };
 
   const cancelEditMode = () => {
     setSelectedRecords([]);
@@ -93,22 +80,26 @@ const removeSelected = async () => {
   }
 
   return (
-    <>
-      <h1>Personal Dictionary</h1>
-
+    <StyledCard>
       {userDictionary && userDictionary.length > 0 ? (
         <>
-          {isEditMode ? (
-            <Stack direction={"row"} gap={1}>
-              <Button onClick={toggleSelectAll}>
-                {areAllSelected ? "Deselect All" : "Select All"}
-              </Button>
-              <Button onClick={removeSelected}>Remove</Button>
-              <Button onClick={cancelEditMode}>Cancel</Button>
-            </Stack>
-          ) : (
-            <Button onClick={() => setIsEditMode(true)}>Edit</Button>
-          )}
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            width={"-webkit-fill-available"}
+            px={2}
+          >
+            <h1 style={{ alignSelf: "start" }}>Personal Dictionary</h1>
+            {isEditMode ? (
+              <Stack direction="row" gap={1}>
+                <Button onClick={removeSelected}>Remove</Button>
+                <Button onClick={cancelEditMode}>Cancel</Button>
+              </Stack>
+            ) : (
+              <Button onClick={() => setIsEditMode(true)}>Edit</Button>
+            )}
+          </Stack>
           <TranslatedResponseTable
             response={{ data: userDictionary }}
             isEditMode={isEditMode}
@@ -127,6 +118,6 @@ const removeSelected = async () => {
       ) : (
         <p>Your personal dictionary is empty.</p>
       )}
-    </>
+    </StyledCard>
   );
 };
