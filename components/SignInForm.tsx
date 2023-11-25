@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button, Card, Input, Typography } from "@mui/joy";
+import { Button, Input, Typography } from "@mui/joy";
 import { Google } from "@mui/icons-material";
 import { loginUser, loginWithGoogle } from "./authHandlers";
 import StyledCard from "./StyledCard";
