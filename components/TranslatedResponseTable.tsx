@@ -36,7 +36,7 @@ export default function TranslatedResponseTable({
   };
 
   return (
-    <Sheet sx={{ overflow: "auto" }}>
+    <Sheet sx={{ overflow: "auto", maxHeight: "60vh" }}>
       <Table aria-label="translated text table" stickyHeader hoverRow>
         <thead>
           <tr>
