@@ -64,7 +64,7 @@ export function TopMenu() {
           textAlign="center"
           onClick={navigateToHome}
         >
-          Script Vocab
+          Vocapy
         </Typography>
       </Box>
       <Box

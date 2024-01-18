@@ -20,14 +20,14 @@ export const LandingPage = () => {
           textAlign="center"
           sx={{ mb: 4, mt: 1 }}
         >
-          Welcome to ScriptVocab - Your New Language Learning Companion!
+          Welcome to Vocapy - Your New Language Learning Companion!
         </Typography>
 
         <section className="personalizeLearning">
           <h2>Personalize Your Language Learning Journey</h2>
           <p>
-            Introducing ScriptVocab, an innovative app that transforms the way
-            you learn languages. With ScriptVocab, you're not just memorizing
+            Introducing Vocapy, an innovative app that transforms the way
+            you learn languages. With Vocapy, you're not just memorizing
             words; you're creating a personalized dictionary that resonates with
             your unique learning style and interests.
           </p>
@@ -36,10 +36,10 @@ export const LandingPage = () => {
         <section className="uniqueDictionary">
           <h2>Craft Your Unique Dictionary with Ease</h2>
           <p>
-            Say goodbye to generic vocabulary lists. ScriptVocab empowers you to
+            Say goodbye to generic vocabulary lists. Vocapy empowers you to
             build your own dictionary effortlessly. Whether you're writing text
             or importing subtitles from your favorite movies, TV shows, or
-            books, ScriptVocab simplifies the process, making language learning
+            books, Vocapy simplifies the process, making language learning
             both enjoyable and effective.
           </p>
         </section>
@@ -47,7 +47,7 @@ export const LandingPage = () => {
         <section className="simplePowerful">
           <h2>Simple Yet Powerful - Your Words, Your Order</h2>
           <p>
-            At the heart of ScriptVocab is the simplicity of sorting your
+            At the heart of Vocapy is the simplicity of sorting your
             personal dictionary by occurrence. This straightforward approach
             allows you to see which words appear most frequently, helping you
             focus on what's important as you dive into a new language.
@@ -58,7 +58,7 @@ export const LandingPage = () => {
           <h2>Your Favorite Texts, Your Language Gateway</h2>
           <p>
             Whether it's a captivating movie, an engaging TV series, or an
-            enthralling book, ScriptVocab lets you turn any text into a stepping
+            enthralling book, Vocapy lets you turn any text into a stepping
             stone for language mastery. Simply upload the text, and watch as
             your personalized dictionary comes to life.
           </p>
@@ -78,7 +78,7 @@ export const LandingPage = () => {
           <h2>We're Here to Support Your Language Learning</h2>
           <p>
             Got questions or need assistance? Our dedicated support team is here
-            to ensure your language learning journey with ScriptVocab is smooth
+            to ensure your language learning journey with Vocapy is smooth
             and enjoyable. Reach out to me on linkedin at &nbsp;
             <a href="https://www.linkedin.com/in/piotrszkafel/">
               www.linkedin.com/in/piotrszkafel
