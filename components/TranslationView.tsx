@@ -100,7 +100,7 @@ export const TranslationView: React.FC = () => {
           level="h1"
           fontWeight="xl"
           textAlign="center"
-          sx={{ mb: 4, mt: 1 }}
+          sx={{ mb: 2, mt: 1 }}
         >
           Translate
         </Typography>
@@ -118,7 +118,6 @@ export const TranslationView: React.FC = () => {
           {textOrFile === "text" ? (
             <Textarea
               placeholder="Enter text here"
-              defaultValue="Try to put text longer than 4 lines."
               sx={{ height: 132 }}
               onChange={(event) => {
                 setText(event.target.value);

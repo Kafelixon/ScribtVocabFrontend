@@ -13,7 +13,6 @@ const StyledCard = (props: StyledCardProps) => (
       width: { xs: 300, sm: "auto" },
       alignItems: "center",
       maxWidth: "80vw",
-      maxHeight: "80vh",
       flexGrow: 1,
       boxSizing: "border-box",
     }}

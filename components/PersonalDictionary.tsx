@@ -80,44 +80,53 @@ export const PersonalDictionary: React.FC = () => {
   }
 
   return (
-    <StyledCard>
-      {userDictionary && userDictionary.length > 0 ? (
-        <>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-            width={"-webkit-fill-available"}
-            px={2}
-          >
-            <h1 style={{ alignSelf: "start" }}>Personal Dictionary</h1>
-            {isEditMode ? (
-              <Stack direction="row" gap={1}>
-                <Button onClick={removeSelected}>Remove</Button>
-                <Button onClick={cancelEditMode}>Cancel</Button>
-              </Stack>
-            ) : (
-              <Button onClick={() => setIsEditMode(true)}>Edit</Button>
-            )}
-          </Stack>
-          <TranslatedResponseTable
-            response={{ data: userDictionary }}
-            isEditMode={isEditMode}
-            selectedRecords={selectedRecords}
-            onSelectRecord={(recordId) => {
-              setSelectedRecords((prev) => {
-                if (prev.includes(recordId)) {
-                  return prev.filter((id) => id !== recordId);
-                } else {
-                  return [...prev, recordId];
-                }
-              });
-            }}
-          />
-        </>
-      ) : (
-        <p>Your personal dictionary is empty.</p>
-      )}
-    </StyledCard>
+    <Stack
+      direction={{ xs: "column", sm: "row" }}
+      spacing={{ xs: 1, sm: 2, md: 4, pt: 7 }}
+      marginX={{ xs: 10, sm: 20, md: 50, pt: 100 }}
+      justifyContent="center"
+      alignItems="center"
+      mt={6}
+    >
+      <StyledCard>
+        {userDictionary && userDictionary.length > 0 ? (
+          <>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+              width={"-webkit-fill-available"}
+              px={2}
+            >
+              <h1 style={{ alignSelf: "start" }}>Personal Dictionary</h1>
+              {isEditMode ? (
+                <Stack direction="row" gap={1}>
+                  <Button onClick={removeSelected}>Remove</Button>
+                  <Button onClick={cancelEditMode}>Cancel</Button>
+                </Stack>
+              ) : (
+                <Button onClick={() => setIsEditMode(true)}>Edit</Button>
+              )}
+            </Stack>
+            <TranslatedResponseTable
+              response={{ data: userDictionary }}
+              isEditMode={isEditMode}
+              selectedRecords={selectedRecords}
+              onSelectRecord={(recordId) => {
+                setSelectedRecords((prev) => {
+                  if (prev.includes(recordId)) {
+                    return prev.filter((id) => id !== recordId);
+                  } else {
+                    return [...prev, recordId];
+                  }
+                });
+              }}
+            />
+          </>
+        ) : (
+          <p>Your personal dictionary is empty.</p>
+        )}
+      </StyledCard>
+    </Stack>
   );
 };
