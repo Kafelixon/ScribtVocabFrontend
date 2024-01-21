@@ -13,7 +13,7 @@ export const LandingPage = () => {
       mt={12}
       mb={6}
     >
-      <StyledCard>
+      <StyledCard sx={{ padding: 5 }}>
         <Typography
           level="h1"
           fontWeight="xl"

@@ -95,12 +95,12 @@ export const TranslationView: React.FC = () => {
       mt={12}
       marginX={{ xs: 2, sm: 4, md: 8 }}
     >
-      <StyledCard>
+      <StyledCard sx={{ padding: 2 }}>
         <Typography
           level="h1"
           fontWeight="xl"
           textAlign="center"
-          sx={{ mb: 2, mt: 1 }}
+          sx={{ my: 1 }}
         >
           Translate
         </Typography>
@@ -183,7 +183,7 @@ export const TranslationView: React.FC = () => {
             />
           </div>
 
-          <Button loading={loading} onClick={handleSubmit} sx={{ mt: 2 }}>
+          <Button loading={loading} onClick={handleSubmit} sx={{ my: 2 }}>
             Submit
           </Button>
         </FormControl>
@@ -191,7 +191,7 @@ export const TranslationView: React.FC = () => {
       {response && (
         <StyledCard>
           <TranslatedResponseTable response={response} />
-          <Button onClick={handleSaveToDictionary} sx={{ mt: 2, width: 300 }}>
+          <Button onClick={handleSaveToDictionary} sx={{ my: 2, width: 300 }}>
             Save to Dictionary
           </Button>
         </StyledCard>
