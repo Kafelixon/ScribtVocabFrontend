@@ -15,7 +15,6 @@ export const PersonalDictionary: React.FC = () => {
   );
   const [userId, setUserId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [selectedRecords, setSelectedRecords] = useState<string[]>([]);
 
   useEffect(() => {
@@ -63,16 +62,30 @@ export const PersonalDictionary: React.FC = () => {
         );
 
         setSelectedRecords([]);
-        setIsEditMode(false);
       } catch (error) {
         console.error("Error removing selected records:", error);
       }
     }
   };
 
-  const cancelEditMode = () => {
-    setSelectedRecords([]);
-    setIsEditMode(false);
+  const handleSelectRecord = (recordId: string) => {
+    setSelectedRecords((prev) => {
+      if (prev.includes(recordId)) {
+        return prev.filter((id) => id !== recordId);
+      } else {
+        return [...prev, recordId];
+      }
+    });
+  };
+
+  const handleSelectAllRecords = () => {
+    setSelectedRecords((prev) => {
+      if (userDictionary && prev.length !== userDictionary.length) {
+        return userDictionary.map((record) => record.original_text);
+      } else {
+        return [];
+      }
+    });
   };
 
   if (isLoading) {
@@ -99,28 +112,20 @@ export const PersonalDictionary: React.FC = () => {
               px={2}
             >
               <h1 style={{ alignSelf: "start" }}>Personal Dictionary</h1>
-              {isEditMode ? (
-                <Stack direction="row" gap={1}>
-                  <Button onClick={removeSelected}>Remove</Button>
-                  <Button onClick={cancelEditMode}>Cancel</Button>
-                </Stack>
-              ) : (
-                <Button onClick={() => setIsEditMode(true)}>Edit</Button>
-              )}
+              <Stack direction="row" gap={1}>
+                <Button
+                  onClick={removeSelected}
+                  disabled={selectedRecords.length === 0}
+                >
+                  Remove
+                </Button>
+              </Stack>
             </Stack>
             <TranslatedResponseTable
               response={{ data: userDictionary }}
-              isEditMode={isEditMode}
               selectedRecords={selectedRecords}
-              onSelectRecord={(recordId) => {
-                setSelectedRecords((prev) => {
-                  if (prev.includes(recordId)) {
-                    return prev.filter((id) => id !== recordId);
-                  } else {
-                    return [...prev, recordId];
-                  }
-                });
-              }}
+              onSelectRecord={handleSelectRecord}
+              onSelectAllRecords={handleSelectAllRecords}
             />
           </>
         ) : (

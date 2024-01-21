@@ -1,4 +1,4 @@
-import { MoreVert } from "@mui/icons-material";
+import MenuIcon from "@mui/icons-material/Menu";
 import {
   Box,
   Button,
@@ -45,7 +45,7 @@ export function TopMenu() {
       sx={{
         boxSizing: "border-box",
         position: "fixed",
-        top: 0,
+        top: -1,
         p: 2,
         width: "100vw",
         minHeight: "60px",
@@ -55,6 +55,11 @@ export function TopMenu() {
         justifyContent: "space-between",
         gap: 1,
         zIndex: 1,
+        // Glassmorphism properties
+        backgroundColor: "rgba(255, 255, 255, 0.4)", // semi-transparent white
+        backdropFilter: "blur(10px)", // blur effect
+        borderRadius: "10px", // rounded corners
+        boxShadow: "0 8px 32px 0 rgba(31, 38, 31, 0.17)", // shadow
       }}
     >
       <Box sx={{ justifySelf: "start" }}>
@@ -78,10 +83,15 @@ export function TopMenu() {
         {!uid && <Button onClick={navigateToSignIn}>Sign in</Button>}
         <Dropdown>
           <MenuButton
+            sx={{
+              borderRadius: "8px", // Apple squircle border radius
+              height: "40px",
+              // padding: 1,
+            }}
             slots={{ root: IconButton }}
-            slotProps={{ root: { variant: "solid", color: "primary" } }}
+            slotProps={{ root: { variant: "plain", color: "neutral" } }}
           >
-            <MoreVert />
+            <MenuIcon sx={{ fontSize: "38px" }} />
           </MenuButton>
           <Menu>
             <MenuItem onClick={navigateToTranslation}>Translation</MenuItem>
