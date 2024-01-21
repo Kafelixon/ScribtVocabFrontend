@@ -1,4 +1,4 @@
-#  - Your New Language Learning Companion
+# Vocapy - Your New Language Learning Companion
 
 Welcome to Vocapy, an innovative language learning application that transforms the way you learn languages. With Vocapy, you're not just memorizing words; you're creating a personalized dictionary that resonates with your unique learning style and interests.
 
@@ -41,7 +41,3 @@ Contributions are welcome! Please read our contributing guidelines for details.
 ## License
 
 This project is licensed under the terms of the MIT license. See the LICENSE file for details.
-
-## Contact
-
-Contact information for the project maintainer or team.
